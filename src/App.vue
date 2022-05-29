@@ -12,14 +12,14 @@ import AppHeader from "./components/AppHeader.vue";
 import MoviePreview from "./components/MoviePreview.vue";
 import { Movie } from "./typings/Movie";
 
-const preview = ref<Movie | null>(null);
+const preview = ref<number | null>(null);
 
 const onClosePreview = () => {
   preview.value = null;
 };
 
 const onChangePreview = (movie: Movie) => {
-  preview.value = movie;
+  preview.value = movie.id;
 
   window.scrollTo({ top: 0 });
 };
@@ -34,16 +34,7 @@ const onChangePreview = (movie: Movie) => {
   <PopularMovies @select-movie="onChangePreview" />
   <TopRatedMovies @select-movie="onChangePreview" />
   <UpcomingMovies @select-movie="onChangePreview" />
-  <MoviePreview
-    v-if="preview"
-    :image-url="preview.backdrop_path"
-    :title="preview.title"
-    :release-date="preview.release_date"
-    :overview="preview.overview"
-    :vote-average="preview.vote_average"
-    :vote-count="preview.vote_count"
-    @close="onClosePreview"
-  />
+  <MoviePreview v-if="preview" :id="preview" @close="onClosePreview" />
 </template>
 
 <style></style>
